@@ -1,6 +1,8 @@
 using DAL;
 using DAL.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using CsPharma_V4.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,15 @@ builder.Services.AddEntityFrameworkNpgsql()
     {
         options.UseNpgsql(builder.Configuration.GetConnectionString("EFCConexion"));
     });
+
+builder.Services.AddEntityFrameworkNpgsql()
+    .AddDbContext<LoginContexto>(options =>
+    {
+        options.UseNpgsql(builder.Configuration.GetConnectionString("EFCConexion"));
+    });
+
+builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<LoginContexto>();
 
 var app = builder.Build();
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
@@ -28,6 +39,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();;
 
 app.UseAuthorization();
 
