@@ -20,9 +20,12 @@ builder.Services.AddEntityFrameworkNpgsql()
     {
         options.UseNpgsql(builder.Configuration.GetConnectionString("EFCConexion"));
     });
+                                                                                                        //activa los roles
+builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false).AddRoles<IdentityRole>()
 
-builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<LoginContexto>();
+
+
 
 var app = builder.Build();
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);

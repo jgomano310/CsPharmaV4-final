@@ -75,6 +75,19 @@ namespace CsPharma_V4.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
+            /// [Required]
+            /// 
+
+            [Required]
+            [StringLength(255, ErrorMessage = "El campo del nombre tiene un máximo de 255 caracteres", MinimumLength = 4)]
+            [Display(Name = "NombreUsuario")]
+            public string NombreUsuario { get; set; }
+
+            [Required]
+            [StringLength(255, ErrorMessage = "El campo de los apellidos tiene un máximo de 255 caracteres", MinimumLength = 4)]
+            [Display(Name = "ApellidosUsuario")]
+            public string ApellidosUsuario { get; set; }
+
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -84,6 +97,9 @@ namespace CsPharma_V4.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
+            ///
+           
+
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
@@ -114,6 +130,9 @@ namespace CsPharma_V4.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
+
+                user.NombreUsuario = Input.NombreUsuario;
+                user.ApellidosUsuario = Input.ApellidosUsuario;
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
