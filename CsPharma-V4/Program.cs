@@ -23,7 +23,7 @@ builder.Services.AddEntityFrameworkNpgsql()
                                                                                                         //activa los roles
 builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false).AddRoles<IdentityRole>()
 
-    .AddEntityFrameworkStores<LoginContexto>();
+  .AddEntityFrameworkStores<LoginContexto>();
 
 
 
